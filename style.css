@@ -968,3 +968,240 @@ textarea.neo-input {
 .text-muted, [style*="color:var(--text-muted)"] {
     color: var(--text-muted) !important;
 }
+
+/* =========================================
+   GHOST OF TSUSHIMA — CINEMATIC INTRO
+   ========================================= */
+
+/* Full-screen overlay */
+.gots-intro {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 99999;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: all;
+}
+
+/* Layer 1 — black background that fades out at the end */
+.gots-black-bg {
+    position: absolute;
+    inset: 0;
+    background: #000;
+    z-index: 1;
+    animation: gotsBlackFadeOut 0.8s ease-out 5.8s forwards;
+}
+
+@keyframes gotsBlackFadeOut {
+    to { opacity: 0; pointer-events: none; }
+}
+
+/* Layer 2 — Red ink brushstroke SVG sweep */
+.gots-brush-sweep {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    height: 200px;
+    transform: translateY(-50%);
+    z-index: 2;
+    opacity: 0;
+    animation: gotsBrushAppear 0.3s ease 0.4s forwards;
+}
+
+@keyframes gotsBrushAppear { to { opacity: 1; } }
+
+/* SVG path draw animation */
+#brush-path {
+    animation: gotsBrushDraw 1s cubic-bezier(0.4, 0, 0.2, 1) 0.5s forwards;
+    stroke-dashoffset: 1;
+}
+
+@keyframes gotsBrushDraw {
+    to { stroke-dashoffset: 0; }
+}
+
+/* Layer 3 — Kanji stamp block */
+.gots-kanji-stamp {
+    position: absolute;
+    z-index: 3;
+    display: flex;
+    gap: 0.5rem;
+    opacity: 0;
+    animation: gotsKanjiAppear 0.4s ease 1.6s forwards;
+}
+
+@keyframes gotsKanjiAppear { to { opacity: 1; } }
+
+.gots-kanji-char {
+    font-family: 'Yuji Boku', serif;
+    font-size: clamp(5rem, 15vw, 11rem);
+    color: #8a120b;
+    line-height: 1;
+    display: block;
+    opacity: 0;
+    transform: scale(1.8);
+    filter: blur(4px);
+}
+
+/* Each char stamps in with delay via JS-driven class */
+.gots-kanji-char.stamp {
+    animation: gotsStamp 0.5s cubic-bezier(0.2, 0.9, 0.3, 1) forwards;
+}
+
+@keyframes gotsStamp {
+    0%   { opacity: 0; transform: scale(1.8); filter: blur(8px); }
+    60%  { opacity: 1; transform: scale(0.92); filter: blur(0); }
+    80%  { transform: scale(1.04); }
+    100% { opacity: 1; transform: scale(1); filter: blur(0); }
+}
+
+/* Layer 4 — Title block */
+.gots-title-block {
+    position: absolute;
+    bottom: 18%;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 4;
+    text-align: center;
+    opacity: 0;
+    animation: gotsFadeUp 0.7s ease 2.5s forwards;
+}
+
+@keyframes gotsFadeUp {
+    from { opacity: 0; transform: translateX(-50%) translateY(24px); }
+    to   { opacity: 1; transform: translateX(-50%) translateY(0); }
+}
+
+.gots-pre-label {
+    font-family: 'Yuji Boku', serif;
+    font-size: clamp(1.8rem, 5vw, 3.5rem);
+    color: #cfc3a3;
+    letter-spacing: 8px;
+    text-transform: uppercase;
+    margin-bottom: 0.4rem;
+    text-shadow: 0 2px 12px rgba(0,0,0,0.8);
+}
+
+.gots-role-label {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(0.7rem, 1.5vw, 1rem);
+    color: rgba(207, 195, 163, 0.6);
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+}
+
+/* Hanko seal — round red stamp */
+.gots-seal {
+    width: 64px;
+    height: 64px;
+    border: 3px solid #8a120b;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    opacity: 0;
+    transform: scale(0) rotate(-30deg);
+    animation: gotsSeal 0.6s cubic-bezier(0.2, 0.9, 0.3, 1.2) 3.2s forwards;
+    box-shadow: 0 0 0 1px rgba(138,18,11,0.3), inset 0 0 0 2px rgba(138,18,11,0.15);
+}
+
+.gots-seal span {
+    font-family: 'Yuji Boku', serif;
+    font-size: 1.8rem;
+    color: #8a120b;
+    line-height: 1;
+}
+
+@keyframes gotsSeal {
+    0%   { opacity: 0; transform: scale(0) rotate(-30deg); }
+    70%  { opacity: 1; transform: scale(1.15) rotate(5deg); }
+    100% { opacity: 1; transform: scale(1) rotate(0deg); }
+}
+
+/* Layer 5 — Katana slash diagonal line */
+.gots-slash {
+    position: absolute;
+    top: 0; left: -10%;
+    width: 0; height: 2px;
+    background: linear-gradient(90deg, transparent, rgba(207,195,163,0.9), transparent);
+    transform: rotate(-8deg);
+    transform-origin: left center;
+    top: 50%;
+    z-index: 5;
+    animation: gotsSlash 0.25s cubic-bezier(0.1, 0.7, 0.3, 1) 3.8s forwards;
+}
+
+@keyframes gotsSlash {
+    0%  { width: 0; opacity: 1; }
+    80% { width: 130%; opacity: 0.9; }
+    100%{ width: 130%; opacity: 0; }
+}
+
+/* Layer 6 — Bottom HUD metadata strip */
+.gots-metadata {
+    position: absolute;
+    bottom: 6%;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 4;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    font-family: 'Cinzel', serif;
+    font-size: clamp(0.55rem, 1.2vw, 0.72rem);
+    color: rgba(207, 195, 163, 0.38);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    white-space: nowrap;
+    opacity: 0;
+    animation: gotsFadeIn 1s ease 2.8s forwards;
+}
+
+.gots-meta-dot {
+    color: #8a120b;
+    font-size: 0.5rem;
+}
+
+@keyframes gotsFadeIn { to { opacity: 1; } }
+
+/* Skip button */
+.gots-skip {
+    position: absolute;
+    bottom: 2rem;
+    right: 2rem;
+    z-index: 10;
+    font-family: 'Cinzel', serif;
+    font-size: 0.72rem;
+    letter-spacing: 3px;
+    color: rgba(207, 195, 163, 0.4) !important;
+    border: none !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    cursor: pointer;
+    text-transform: uppercase;
+    padding: 8px 16px !important;
+    transition: color 0.3s;
+    animation: gotsFadeIn 0.5s ease 1s forwards;
+    opacity: 0;
+}
+
+.gots-skip:hover {
+    color: rgba(207, 195, 163, 0.9) !important;
+}
+
+/* Final: the whole intro slides up to reveal site */
+.gots-intro.exit {
+    animation: gotsExitSlideUp 0.9s cubic-bezier(0.7, 0, 1, 1) forwards;
+}
+
+@keyframes gotsExitSlideUp {
+    0%   { transform: translateY(0); opacity: 1; }
+    100% { transform: translateY(-100vh); opacity: 0; }
+}

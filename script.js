@@ -999,3 +999,86 @@ function initSoundSystem() {
         card.addEventListener('mouseenter', playChime);
     });
 }
+
+// =============================================
+// GHOST OF TSUSHIMA — CINEMATIC INTRO CONTROLLER
+// =============================================
+
+function runGoTSIntro() {
+    const intro   = document.getElementById('intro-sequence');
+    const chars   = document.querySelectorAll('.gots-kanji-char');
+    if (!intro) { unlockBody(); return; }
+
+    // Check if already seen this session
+    if (sessionStorage.getItem('gots-intro-seen')) {
+        intro.style.display = 'none';
+        unlockBody();
+        return;
+    }
+
+    // Lock scrolling while intro plays
+    document.body.classList.add('no-scroll');
+
+    // Stamp each Kanji character in sequence
+    // First char at 1.7s, second at 2.1s
+    const stampDelays = [1700, 2100];
+    chars.forEach((char, i) => {
+        setTimeout(() => {
+            char.classList.add('stamp');
+        }, stampDelays[i]);
+    });
+
+    // Auto-exit after full sequence (6.5s total)
+    const autoExit = setTimeout(() => exitIntro(intro), 6500);
+
+    // Store the timeout so skip can clear it
+    intro._autoExit = autoExit;
+}
+
+function exitIntro(intro) {
+    if (!intro) intro = document.getElementById('intro-sequence');
+    if (!intro || intro.classList.contains('exit')) return;
+
+    if (intro._autoExit) clearTimeout(intro._autoExit);
+
+    // Play the slide-up exit animation
+    intro.classList.add('exit');
+
+    // After animation completes, remove from DOM and unlock body
+    setTimeout(() => {
+        intro.style.display = 'none';
+        unlockBody();
+        sessionStorage.setItem('gots-intro-seen', '1');
+
+        // Initialize rest of site
+        initNavbar();
+        init3DCards();
+        initTouchFlip();
+        initChatbot();
+        initScrollReveal();
+        initSoundSystem();
+    }, 950);
+}
+
+function skipIntro() {
+    const intro = document.getElementById('intro-sequence');
+    exitIntro(intro);
+}
+
+function unlockBody() {
+    document.body.classList.remove('no-scroll');
+}
+
+// Boot the intro immediately on script load
+(function() {
+    const intro = document.getElementById('intro-sequence');
+    if (!intro) { unlockBody(); return; }
+
+    if (sessionStorage.getItem('gots-intro-seen')) {
+        intro.style.display = 'none';
+        unlockBody();
+    } else {
+        runGoTSIntro();
+    }
+})();
+

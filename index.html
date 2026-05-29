@@ -84,60 +84,55 @@
 
 
     <!-- ==========================================
-         CINEMATIC INTRO SEQUENCE
+         GHOST OF TSUSHIMA — CINEMATIC INTRO
          ========================================== -->
-    <div id="intro-sequence" class="intro-overlay">
-        <!-- Futuristic Background Grid -->
-        <div class="intro-grid-bg"></div>
-        <!-- Ambient Glow Rings -->
-        <div class="intro-ambient-ring ring-1"></div>
-        <div class="intro-ambient-ring ring-2"></div>
-        <div class="intro-ambient-ring ring-3"></div>
+    <div id="intro-sequence" class="gots-intro">
 
-        <!-- Phase 1 & 2: Photo + Logo Side-by-Side (desktop) / stacked (mobile) -->
-        <div class="intro-stage" id="intro-stage">
+        <!-- Layer 1: Pure black opening -->
+        <div class="gots-black-bg"></div>
 
-            <!-- Photo Block -->
-            <div class="intro-photo-block" id="intro-photo-block">
-                <div class="intro-photo-frame">
-                    <div class="intro-photo-glow"></div>
-                    <img src="./assets/portrait.jpg" alt="Ahmed Al-Malah" class="intro-portrait-img" id="intro-portrait-img"
-                         onerror="this.src='https://via.placeholder.com/200/111/FF1A1A?text=Ahmed'">
-                    <div class="portrait-scan-line"></div>
-                </div>
-                <!-- Name under photo -->
-                <div class="intro-name-block" id="intro-name-block">
-                    <span class="intro-name-text">Ahmed Al-Malah</span>
-                    <div class="name-light-streak"></div>
-                </div>
-            </div>
-
-            <!-- Logo Block -->
-            <div class="intro-logo-block" id="intro-logo-block">
-                <div class="intro-logo-frame">
-                    <div class="logo-glow-ring"></div>
-                    <img src="./assets/logo.png?v=4" alt="Zainstein" class="intro-zain-logo" id="intro-zain-logo"
-                         onerror="this.src='https://via.placeholder.com/280/111/FF1A1A?text=ZAINSTEIN'">
-                    <div class="logo-light-sweep"></div>
-                </div>
-            </div>
-
+        <!-- Layer 2: Red ink brushstroke sweeping across -->
+        <div class="gots-brush-sweep" id="gots-brush">
+            <svg viewBox="0 0 1920 200" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+                <path id="brush-path"
+                    d="M-100,80 C200,30 400,140 700,70 C900,20 1100,130 1400,65 C1600,20 1750,100 2020,55"
+                    stroke="#8a120b" stroke-width="90" fill="none"
+                    stroke-linecap="round" stroke-linejoin="round"
+                    pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/>
+            </svg>
         </div>
 
-        <!-- Phase 3: Welcome Text Block -->
-        <div class="intro-welcome-block" id="intro-welcome-block">
-            <div class="intro-typing-container">
-                <span class="intro-cursor-blink">|</span>
-                <span class="intro-typing-text" id="intro-typing-text"></span>
-            </div>
-            <div class="intro-tagline" id="intro-tagline">
-                <span class="en-text">Where Code Meets Creativity</span>
-                <span class="ar-text" style="display:none;">حيث يلتقي الكود بالإبداع</span>
+        <!-- Layer 3: Central Kanji stamp -->
+        <div class="gots-kanji-stamp" id="gots-kanji">
+            <span class="gots-kanji-char" data-delay="0">冥</span>
+            <span class="gots-kanji-char" data-delay="1">人</span>
+        </div>
+
+        <!-- Layer 4: Name title — Samurai stamp style -->
+        <div class="gots-title-block" id="gots-title">
+            <div class="gots-pre-label">AHMED AL-MALAH</div>
+            <div class="gots-role-label">Senior Designer &amp; Software Engineer</div>
+            <!-- Red Hanko seal stamp -->
+            <div class="gots-seal">
+                <span>侍</span>
             </div>
         </div>
 
-        <!-- Particle Canvas -->
-        <canvas class="intro-particles-canvas" id="intro-particle-canvas"></canvas>
+        <!-- Layer 5: Katana slash line crossing screen -->
+        <div class="gots-slash" id="gots-slash"></div>
+
+        <!-- Layer 6: Bottom cinematic metadata strip (like game HUD) -->
+        <div class="gots-metadata" id="gots-metadata">
+            <span>ZAINSTEIN CREATIVE STUDIO</span>
+            <span class="gots-meta-dot">◆</span>
+            <span>PORTFOLIO 2026</span>
+            <span class="gots-meta-dot">◆</span>
+            <span>ALEXANDRIA · EGYPT</span>
+        </div>
+
+        <!-- Skip button -->
+        <button class="gots-skip" id="gots-skip" onclick="skipIntro()">SKIP  ›</button>
+
     </div>
 
     <!-- Background Elements -->
