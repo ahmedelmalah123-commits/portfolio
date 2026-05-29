@@ -1,0 +1,602 @@
+@import url('https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400;1,700&family=Cinzel:wght@400;600;700;900&family=Noto+Serif+JP:wght@400;600;700;900&family=Yuji+Boku&display=swap');
+
+:root {
+    --bg-primary: #d9cfb4;
+    --bg-overlay: rgba(20, 15, 10, 0.4);
+    --text-main: #1a1614;
+    --accent-red: #8a120b;
+    --accent-gold: #b08d57;
+    --text-white: #1a1614; /* Muted ink instead of absolute white for theme consistency */
+    --bg-dark: #f0e6cf; /* Warm parchment paper overlay */
+    
+    --font-heading: 'Yuji Boku', 'Noto Serif JP', serif;
+    --font-subheading: 'Cinzel', serif;
+    --font-body: 'Noto Serif JP', serif;
+    --font-arabic: 'Amiri', serif;
+}
+
+/* Global Reset */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: var(--bg-primary);
+    color: var(--text-main);
+    font-family: var(--font-body);
+    line-height: 1.6;
+    overflow-x: hidden;
+    position: relative;
+    min-height: 100vh;
+}
+
+/* Cinematic Vignette Overlay */
+.cinematic-vignette {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, transparent 20%, rgba(20, 15, 10, 0.4) 100%);
+    pointer-events: none;
+    z-index: 9999;
+}
+
+/* Background vertical Kanji */
+.bg-kanji-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: -2;
+    overflow: hidden;
+    user-select: none;
+}
+
+.bg-kanji {
+    position: absolute;
+    font-family: 'Yuji Boku', serif;
+    font-size: clamp(8rem, 20vw, 16rem);
+    color: rgba(26, 22, 20, 0.04);
+    writing-mode: vertical-rl;
+    line-height: 1;
+    font-weight: 900;
+}
+
+.bg-kanji-left {
+    top: 10%;
+    left: 4%;
+}
+
+.bg-kanji-right {
+    bottom: 10%;
+    right: 4%;
+}
+
+/* Painted Brush Headings Style */
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+    color: var(--text-main);
+    opacity: 0.9;
+    text-shadow: 1px 1px 1px rgba(26, 22, 20, 0.12);
+    font-weight: 700;
+}
+
+h1 {
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    margin-bottom: 1rem;
+}
+
+h2 {
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-family: var(--font-subheading);
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+h3 {
+    font-size: clamp(1.4rem, 3vw, 2rem);
+    font-family: var(--font-subheading);
+    margin-bottom: 1rem;
+}
+
+p {
+    font-size: 1.05rem;
+    opacity: 0.85;
+    margin-bottom: 1.2rem;
+}
+
+[dir="rtl"], .ar-text {
+    font-family: var(--font-arabic) !important;
+}
+
+/* UI Reset */
+button, input, textarea, select, .card, .btn, .skill-card-3d, .project-card-3d, .service-card, .glass-panel {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    outline: none !important;
+}
+
+/* Navigation Menu */
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 1.5rem 8%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 1000;
+    background: transparent !important;
+    border: none !important;
+}
+
+.nav-brand img {
+    height: 48px;
+    object-fit: contain;
+    filter: brightness(0.12) contrast(1.2); /* Black Ink Logo */
+}
+
+/* Spacing vertical credits along the left margin just like the vertical game metadata */
+.navbar::before {
+    content: 'AHMED AL-MALAH • PORTFOLIO';
+    position: fixed;
+    left: 3rem;
+    top: 50%;
+    transform: translateY(-50%) rotate(-90deg);
+    transform-origin: left center;
+    font-family: var(--font-subheading);
+    font-weight: 700;
+    font-size: 0.75rem;
+    letter-spacing: 6px;
+    color: rgba(26, 22, 20, 0.22);
+    pointer-events: none;
+    z-index: 100;
+    white-space: nowrap;
+}
+
+.nav-links {
+    display: flex;
+    gap: 2.5rem;
+    list-style: none;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: var(--text-main);
+    font-family: var(--font-subheading);
+    font-weight: 700;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    position: relative;
+    padding: 6px 0;
+    transition: color 0.3s ease;
+}
+
+.nav-links a:hover {
+    color: var(--accent-red) !important;
+}
+
+/* Rough Ink-Brush slant underline for nav links on hover */
+.nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: var(--accent-red);
+    transform: scaleX(0) skewX(-15deg);
+    transform-origin: left;
+    transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+    clip-path: polygon(2% 15%, 98% 0%, 100% 85%, 0% 100%);
+}
+
+.nav-links a:hover::after {
+    transform: scaleX(1) skewX(-15deg);
+}
+
+.nav-controls {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.lang-toggle, .theme-toggle, .menu-toggle {
+    font-family: var(--font-subheading);
+    font-weight: 700;
+    font-size: 0.85rem;
+    color: var(--text-main);
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.lang-toggle:hover, .theme-toggle:hover, .menu-toggle:hover {
+    color: var(--accent-red);
+}
+
+/* Cinematic Sections */
+.cinematic-section {
+    padding: 120px 8% 80px;
+    position: relative;
+    z-index: 2;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+/* Hero Section */
+.hero-section {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: 120px 8% 80px;
+    position: relative;
+    z-index: 2;
+    overflow: hidden;
+}
+
+.hero-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 6rem;
+    width: 100%;
+    max-width: 1300px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 5;
+}
+
+.hero-left {
+    flex: 1.2;
+    position: relative;
+    z-index: 10;
+}
+
+.hero-right {
+    flex: 0.8;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.kanji-background {
+    position: absolute;
+    top: -5%;
+    left: -15%;
+    display: flex;
+    flex-direction: column;
+    font-family: 'Yuji Boku', serif;
+    font-size: clamp(6rem, 12vw, 10rem);
+    color: rgba(26, 22, 20, 0.05) !important;
+    line-height: 1;
+    pointer-events: none;
+    user-select: none;
+    z-index: 1;
+    mix-blend-mode: multiply;
+}
+
+.pre-title {
+    font-family: var(--font-subheading);
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    color: var(--accent-red);
+    margin-bottom: 1.5rem;
+    font-weight: 700;
+}
+
+.hero-title {
+    font-size: clamp(3rem, 7vw, 5.5rem);
+    font-family: var(--font-heading);
+    color: var(--accent-red) !important; /* Sucker Punch red logo stamp color */
+    line-height: 1.05;
+    margin-bottom: 2rem;
+    opacity: 0.95;
+    text-transform: uppercase;
+}
+
+.hero-role {
+    font-family: var(--font-subheading);
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--text-main);
+    opacity: 0.9;
+    margin-bottom: 0.5rem;
+    line-height: 1.3;
+}
+
+.hero-subrole {
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    opacity: 0.75;
+    margin-bottom: 1.5rem;
+    line-height: 1.5;
+}
+
+.hero-founder {
+    font-family: var(--font-subheading);
+    font-size: 1.3rem !important;
+    margin-bottom: 0.8rem;
+}
+
+.hero-founder span {
+    color: var(--accent-red) !important;
+    font-weight: 900;
+}
+
+.hero-tagline {
+    font-style: italic;
+    font-family: var(--font-subheading);
+    color: var(--accent-gold);
+    font-size: 1.1rem;
+    margin-bottom: 2.5rem;
+}
+
+.hero-actions {
+    display: flex;
+    gap: 2rem;
+}
+
+/* Portrait Image with splattered edges mask and blend-mode multiply */
+.portrait-container {
+    position: relative;
+    width: 100%;
+    max-width: 380px;
+    aspect-ratio: 4/5;
+    mix-blend-mode: multiply;
+    overflow: hidden;
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+.portrait-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: grayscale(100%) sepia(50%) contrast(125%) brightness(75%) !important;
+    -webkit-mask-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500"><path d="M150,80 Q250,30 350,80 T450,220 Q480,320 380,400 T200,430 Q80,380 70,260 T150,80 Z" fill="black"/><circle cx="100" cy="120" r="35" fill="black"/><circle cx="380" cy="140" r="50" fill="black"/><circle cx="420" cy="330" r="30" fill="black"/><circle cx="90" cy="340" r="40" fill="black"/><circle cx="220" cy="45" r="25" fill="black"/><path d="M120,380 C80,420 50,380 40,340 C30,300 70,320 100,350 Z" fill="black"/></svg>') !important;
+    mask-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500"><path d="M150,80 Q250,30 350,80 T450,220 Q480,320 380,400 T200,430 Q80,380 70,260 T150,80 Z" fill="black"/><circle cx="100" cy="120" r="35" fill="black"/><circle cx="380" cy="140" r="50" fill="black"/><circle cx="420" cy="330" r="30" fill="black"/><circle cx="90" cy="340" r="40" fill="black"/><circle cx="220" cy="45" r="25" fill="black"/><path d="M120,380 C80,420 50,380 40,340 C30,300 70,320 100,350 Z" fill="black"/></svg>') !important;
+    -webkit-mask-size: contain;
+    mask-size: contain;
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+    mask-position: center;
+    border: none !important;
+    box-shadow: none !important;
+    background: transparent !important;
+}
+
+/* Minimalist Katana Border Buttons */
+.btn {
+    text-decoration: none;
+    font-family: var(--font-subheading);
+    font-weight: 700;
+    font-size: 0.95rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 10px 0 10px 18px !important;
+    cursor: pointer;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-main) !important;
+    border-left: 4px solid var(--accent-red) !important;
+    background: transparent !important;
+    border-top: none !important;
+    border-bottom: none !important;
+    border-right: none !important;
+    box-shadow: none !important;
+    transition: color 0.3s ease;
+}
+
+.btn::after {
+    content: '';
+    position: absolute;
+    left: 18px;
+    top: 50%;
+    width: 0;
+    height: 1.5px;
+    background: var(--accent-red);
+    transform: translateY(-50%) rotate(-2deg);
+    transition: width 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.btn:hover {
+    color: var(--accent-red) !important;
+}
+
+.btn:hover::after {
+    width: calc(100% - 18px);
+}
+
+/* About Section */
+.about-content {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+/* Grids for Skills, Projects & Services */
+.skills-grid, .projects-grid, .zainstein-services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2.5rem;
+    margin-top: 3rem;
+}
+
+/* Minimalist Ink Cards */
+.skill-card-3d, .project-card-3d, .service-card {
+    padding: 2.2rem;
+    border: 1px solid rgba(26, 22, 20, 0.12) !important;
+    background: rgba(26, 22, 20, 0.02) !important;
+    transition: all 0.4s ease;
+    min-height: 220px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.skill-card-3d:hover, .project-card-3d:hover, .service-card:hover {
+    border-color: var(--accent-red) !important;
+    background: rgba(138, 12, 11, 0.03) !important;
+    transform: translateY(-4px);
+}
+
+/* Skills Progress Bars (Blade Ink style) */
+.skill-item-bar {
+    margin-top: 1rem;
+    width: 100%;
+}
+
+.progress-bar-bg {
+    width: 100%;
+    height: 4px;
+    background: rgba(26, 22, 20, 0.1);
+    transform: skewX(-20deg);
+}
+
+.progress-bar-fill {
+    height: 100%;
+    background: var(--accent-red) !important;
+    width: var(--percent, 0%);
+    transition: width 1s ease-in-out;
+}
+
+/* Contact Form */
+.contact-container {
+    max-width: 600px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.cinematic-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.form-group input, .form-group textarea {
+    width: 100%;
+    padding: 12px;
+    font-family: var(--font-body);
+    color: var(--text-main);
+    border-bottom: 1px solid rgba(26, 22, 20, 0.2) !important;
+    transition: border-color 0.3s;
+}
+
+.form-group input:focus, .form-group textarea:focus {
+    border-bottom-color: var(--accent-red) !important;
+}
+
+.submit-btn {
+    align-self: center;
+    margin-top: 1rem;
+}
+
+/* Footer styling */
+.site-footer {
+    padding: 3rem 8%;
+    background: rgba(26, 22, 20, 0.05);
+    border-top: 1px solid rgba(26, 22, 20, 0.1);
+    text-align: center;
+}
+
+/* Custom ink droplet cursor */
+.custom-cursor {
+    width: 12px;
+    height: 12px;
+    background: var(--accent-red);
+    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+    position: fixed;
+    pointer-events: none;
+    z-index: 999999;
+    transform: translate(-50%, -50%);
+    transition: transform 0.08s;
+}
+
+.cursor-follower {
+    width: 32px;
+    height: 32px;
+    border: 1px solid var(--accent-gold);
+    border-radius: 50%;
+    position: fixed;
+    pointer-events: none;
+    z-index: 999998;
+    transform: translate(-50%, -50%);
+    transition: transform 0.18s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+/* Traditional Japanese Lantern Chatbot */
+.ai-assistant {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    z-index: 1000;
+}
+
+[dir="rtl"] .ai-assistant {
+    right: auto;
+    left: 30px;
+}
+
+.chatbot-toggle-btn {
+    width: 52px;
+    height: 68px;
+    border-radius: 16px 16px 16px 16px / 20px 20px 20px 20px;
+    background: var(--accent-red) !important;
+    border-top: 4px solid #1a1614 !important;
+    border-bottom: 4px solid #1a1614 !important;
+    border-left: 1px solid var(--accent-gold) !important;
+    border-right: 1px solid var(--accent-gold) !important;
+    color: var(--accent-gold) !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.15) !important;
+    transition: transform 0.3s;
+}
+
+.chatbot-toggle-btn:hover {
+    transform: scale(1.08) translateY(-4px);
+}
+
+/* Hide cyber and parallax elements to allow pristine calligraphic poster presentation */
+.particles, .fog-container, .cinematic-bg, .intro-sequence, #intro-sequence,
+.hero-parallax-layer, .abstract-symbol, .neon-outline {
+    display: none !important;
+}
+
+/* Responsive adjustments */
+@media (max-width: 992px) {
+    .hero-container {
+        flex-direction: column;
+        text-align: center;
+    }
+    .hero-actions {
+        justify-content: center;
+    }
+    .navbar {
+        padding: 1rem 5%;
+    }
+    .nav-links {
+        display: none;
+    }
+    .navbar::before {
+        display: none;
+    }
+}
