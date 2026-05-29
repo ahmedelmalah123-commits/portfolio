@@ -1902,3 +1902,381 @@ body.no-scroll {
 .light-mode .portrait-container {
     mix-blend-mode: normal !important;
 }
+
+/* =========================================
+   COMPREHENSIVE RESPONSIVE OPTIMIZATIONS
+   ========================================= */
+
+/* --- TABLET ADAPTATIONS (max-width: 992px) --- */
+@media (max-width: 992px) {
+    .gots-intro-content {
+        flex-direction: column;
+        justify-content: center;
+        gap: 1.5rem !important;
+        padding: 2rem 5% !important;
+    }
+    
+    .gots-samurai-strike {
+        width: 220px !important;
+        height: 220px !important;
+        margin: 0.5rem 0 !important;
+    }
+    
+    .samurai-intro-wrapper {
+        width: 220px !important;
+        height: 220px !important;
+    }
+    
+    .samurai-intro-img {
+        width: 190px !important;
+        height: 190px !important;
+    }
+    
+    .samurai-blade-spin {
+        width: 205px !important;
+        height: 205px !important;
+    }
+    
+    .samurai-glowing-sun {
+        width: 200px !important;
+        height: 200px !important;
+    }
+
+    .hero-container {
+        gap: 2.5rem !important;
+    }
+
+    .skills-grid, .projects-grid, .zainstein-services-grid {
+        gap: 1.5rem !important;
+        margin-top: 2rem !important;
+    }
+    
+    .skill-card-3d, .project-card-3d, .service-card, .glass-panel, .ai-card {
+        padding: 1.6rem !important;
+    }
+}
+
+/* --- MOBILE ADAPTATIONS (max-width: 768px) --- */
+@media (max-width: 768px) {
+    body {
+        font-size: 0.95rem;
+    }
+
+    /* Cinematic Intro Optimization to prevent vertical overflow/overlapping */
+    .gots-intro-content {
+        justify-content: space-evenly;
+        gap: 1rem !important;
+        padding: 1.5rem 4% !important;
+    }
+
+    .gots-kanji-stamp {
+        gap: 0.5rem !important;
+        margin-bottom: 0.5rem !important;
+    }
+
+    .gots-kanji-char {
+        font-size: clamp(2.2rem, 6vw, 3.2rem) !important;
+    }
+
+    .gots-kanji-translation {
+        gap: 0.2rem !important;
+        margin-top: 0.2rem;
+    }
+
+    .gots-kanji-translation .en-translation {
+        font-size: 0.65rem !important;
+        letter-spacing: 1.5px !important;
+    }
+
+    .gots-kanji-translation .ar-translation {
+        font-size: 0.8rem !important;
+    }
+
+    .gots-samurai-strike {
+        width: 160px !important;
+        height: 160px !important;
+        margin: 0.2rem 0 !important;
+    }
+
+    .samurai-intro-wrapper {
+        width: 160px !important;
+        height: 160px !important;
+    }
+
+    .samurai-intro-img {
+        width: 130px !important;
+        height: 130px !important;
+    }
+
+    .samurai-blade-spin {
+        width: 145px !important;
+        height: 145px !important;
+    }
+
+    .samurai-glowing-sun {
+        width: 140px !important;
+        height: 140px !important;
+    }
+
+    .gots-title-block {
+        gap: 0.3rem !important;
+    }
+
+    .gots-pre-label {
+        font-size: clamp(1.2rem, 3.5vw, 1.8rem) !important;
+        letter-spacing: 4px !important;
+    }
+
+    .gots-role-label {
+        font-size: 0.65rem !important;
+        letter-spacing: 2px !important;
+        margin-bottom: 0.8rem !important;
+    }
+
+    .gots-seal {
+        width: 40px !important;
+        height: 40px !important;
+        border-width: 2px !important;
+    }
+
+    .gots-seal span {
+        font-size: 1.15rem !important;
+    }
+
+    /* Hide redundant metadata strip on mobile to secure vertical layout */
+    .gots-metadata {
+        display: none !important;
+    }
+
+    .gots-skip {
+        bottom: 1rem !important;
+        right: 1rem !important;
+        font-size: 0.65rem !important;
+        padding: 4px 10px !important;
+    }
+
+    /* Hero Section Clean scaling */
+    .hero-section {
+        padding-top: 100px !important;
+        padding-bottom: 40px !important;
+        min-height: auto !important;
+        display: block !important;
+    }
+    
+    .hero-container {
+        flex-direction: column !important;
+        text-align: center !important;
+        gap: 1.5rem !important;
+    }
+    
+    .hero-left {
+        width: 100% !important;
+    }
+
+    .hero-title {
+        font-size: clamp(1.8rem, 8vw, 2.6rem) !important;
+        margin-bottom: 1rem !important;
+        line-height: 1.2 !important;
+    }
+
+    .hero-role {
+        font-size: 0.95rem !important;
+        margin-bottom: 0.3rem !important;
+    }
+
+    .hero-subrole {
+        font-size: 0.8rem !important;
+        margin-bottom: 0.8rem !important;
+    }
+
+    .hero-founder {
+        font-size: 0.95rem !important;
+        margin-bottom: 0.4rem !important;
+    }
+
+    .hero-tagline {
+        font-size: 0.85rem !important;
+        margin-bottom: 1.2rem !important;
+    }
+
+    .hero-actions {
+        gap: 1rem !important;
+        justify-content: center !important;
+    }
+
+    .hero-actions .btn {
+        padding: 8px 0 8px 15px !important;
+        font-size: 0.8rem !important;
+        letter-spacing: 1.5px !important;
+    }
+
+    .portrait-container {
+        max-width: 200px !important;
+        margin: 0 auto !important;
+    }
+
+    .avatar-toggle-btn {
+        width: 36px !important;
+        height: 36px !important;
+        bottom: 5px !important;
+        right: 5px !important;
+    }
+    
+    .avatar-toggle-btn .toggle-icon {
+        font-size: 1rem !important;
+    }
+
+    /* General Spacings */
+    .cinematic-section, section {
+        padding: 3rem 6% !important;
+        min-height: auto !important;
+    }
+
+    .section-title-wrapper {
+        margin-bottom: 1.5rem !important;
+    }
+
+    .title-underline {
+        margin-bottom: 1.5rem !important;
+    }
+
+    /* Cards and Grids Fit */
+    .skill-card-3d, .project-card-3d, .service-card, .glass-panel, .ai-card {
+        padding: 1.2rem !important;
+    }
+
+    /* Stats responsive */
+    .stats-container {
+        gap: 1.2rem !important;
+        margin-top: 1.5rem !important;
+    }
+
+    .stat-item {
+        min-width: 100px !important;
+    }
+
+    .stat-number {
+        font-size: 2rem !important;
+    }
+
+    .stat-label {
+        font-size: 0.7rem !important;
+        letter-spacing: 1.5px !important;
+    }
+
+    /* Toolkit responsive */
+    .toolkit-container {
+        gap: 0.6rem 1rem !important;
+        margin-top: 1.5rem !important;
+    }
+
+    .toolkit-item {
+        min-width: 60px !important;
+    }
+
+    .toolkit-item i, 
+    .toolkit-item [class^="devicon-"], 
+    .toolkit-item .devicon {
+        font-size: 1.8rem !important;
+    }
+
+    .toolkit-item span {
+        font-size: 0.6rem !important;
+    }
+
+    /* Team/Core Leadership responsive proportions */
+    .team-section {
+        padding: 1.5rem !important;
+        margin-top: 4rem !important;
+    }
+
+    .team-card-inner {
+        gap: 1.2rem !important;
+    }
+
+    .team-desc {
+        font-size: 0.85rem !important;
+        line-height: 1.5 !important;
+    }
+
+    /* Chatbot floating widget responsiveness */
+    .ai-assistant {
+        bottom: 15px !important;
+        right: 15px !important;
+    }
+    
+    [dir="rtl"] .ai-assistant {
+        left: 15px !important;
+        right: auto !important;
+    }
+
+    .chatbot-panel {
+        width: calc(100vw - 30px) !important;
+        bottom: 75px !important;
+        right: -5px !important;
+    }
+    
+    [dir="rtl"] .chatbot-panel {
+        left: -5px !important;
+        right: auto !important;
+    }
+}
+
+/* --- SMALL MOBILE ADAPTATIONS (max-width: 480px) --- */
+@media (max-width: 480px) {
+    .skills-grid, .projects-grid, .zainstein-services-grid {
+        grid-template-columns: 1fr !important;
+    }
+
+    .hero-title {
+        font-size: 2rem !important;
+    }
+
+    .gots-intro-content {
+        gap: 0.6rem !important;
+    }
+
+    .gots-samurai-strike {
+        width: 140px !important;
+        height: 140px !important;
+    }
+
+    .samurai-intro-wrapper {
+        width: 140px !important;
+        height: 140px !important;
+    }
+
+    .samurai-intro-img {
+        width: 115px !important;
+        height: 115px !important;
+    }
+
+    .samurai-blade-spin {
+        width: 125px !important;
+        height: 125px !important;
+    }
+
+    .samurai-glowing-sun {
+        width: 120px !important;
+        height: 120px !important;
+    }
+    
+    .gots-pre-label {
+        font-size: 1.1rem !important;
+    }
+    
+    .gots-role-label {
+        font-size: 0.6rem !important;
+        margin-bottom: 0.4rem !important;
+    }
+
+    .chatbot-panel {
+        width: calc(100vw - 30px) !important;
+        right: -5px !important;
+    }
+    
+    [dir="rtl"] .chatbot-panel {
+        left: -5px !important;
+        right: auto !important;
+    }
+}
