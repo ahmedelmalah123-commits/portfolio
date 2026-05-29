@@ -1205,3 +1205,214 @@ textarea.neo-input {
     0%   { transform: translateY(0); opacity: 1; }
     100% { transform: translateY(-100vh); opacity: 0; }
 }
+
+/* =========================================
+   TOOLKIT — 4-column responsive icon grid
+   ========================================= */
+.toolkit-container {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 1.2rem 2rem !important;
+    justify-content: center !important;
+    align-items: center !important;
+    margin-top: 2.5rem;
+    padding: 1.5rem 0;
+}
+
+.toolkit-item {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 0.5rem;
+    min-width: 80px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s, transform 0.5s;
+}
+
+.toolkit-item.visible {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+}
+
+.toolkit-item i,
+.toolkit-item [class^="devicon-"],
+.toolkit-item .devicon {
+    font-size: 2.2rem !important;
+    transition: transform 0.3s;
+}
+
+.toolkit-item:hover i,
+.toolkit-item:hover [class^="devicon-"] {
+    transform: translateY(-4px);
+}
+
+.toolkit-item span {
+    font-family: var(--font-subheading);
+    font-size: 0.7rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--text-main);
+    opacity: 0.65;
+}
+
+/* =========================================
+   STATS / IMPACT — horizontal row
+   ========================================= */
+.stats-container {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    justify-content: center !important;
+    gap: 3rem !important;
+    margin-top: 2.5rem;
+}
+
+.stat-item {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    text-align: center;
+    min-width: 140px;
+}
+
+.stat-number {
+    font-family: 'Yuji Boku', serif !important;
+    font-size: clamp(2.5rem, 6vw, 4rem) !important;
+    color: var(--accent-red) !important;
+    line-height: 1 !important;
+    margin-bottom: 0.4rem;
+}
+
+.stat-label {
+    font-family: var(--font-subheading) !important;
+    font-size: 0.78rem !important;
+    letter-spacing: 2.5px !important;
+    text-transform: uppercase !important;
+    opacity: 0.6 !important;
+}
+
+/* =========================================
+   TEAM / LEADERSHIP CARD — proportioned
+   ========================================= */
+.team-section {
+    max-width: 700px;
+    margin: 3rem auto 0;
+    border: 1px solid rgba(15, 12, 11, 0.1);
+    border-top: 3px solid var(--accent-red);
+    padding: 2.5rem;
+    background: rgba(15, 12, 11, 0.02);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.07);
+}
+
+.team-card {
+    max-width: 100% !important;
+    margin: 0 !important;
+}
+
+.team-card-inner {
+    flex-direction: row !important;
+    align-items: flex-start !important;
+    gap: 2.5rem !important;
+    text-align: left !important;
+}
+
+.team-portrait {
+    width: 160px !important;
+    height: 190px !important;
+    max-width: 160px !important;
+    min-width: 160px !important;
+    object-fit: cover !important;
+    border-radius: 2px !important;
+    filter: grayscale(85%) sepia(40%) contrast(110%) brightness(80%) !important;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+    flex-shrink: 0;
+}
+
+@media (max-width: 600px) {
+    .team-card-inner {
+        flex-direction: column !important;
+        align-items: center !important;
+        text-align: center !important;
+    }
+    .team-portrait {
+        width: 130px !important;
+        height: 155px !important;
+        min-width: 130px !important;
+    }
+}
+
+/* =========================================
+   SCROLL REVEAL ANIMATIONS
+   ========================================= */
+[data-reveal] {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+                transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+[data-reveal="scale-in"] {
+    transform: scale(0.94) translateY(20px);
+    transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+                transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+[data-reveal].revealed {
+    opacity: 1 !important;
+    transform: none !important;
+}
+
+/* Stagger children inside grids */
+.skills-grid [data-reveal],
+.projects-grid [data-reveal],
+.zainstein-services-grid [data-reveal] {
+    transition-delay: calc(var(--stagger, 0) * 100ms);
+}
+
+/* =========================================
+   PAGE NAVIGATION TRANSITIONS
+   ========================================= */
+.nav-link {
+    position: relative;
+}
+
+/* Section entry sweep line */
+section::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 0; height: 2px;
+    background: var(--accent-red);
+    transition: width 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+    opacity: 0.4;
+}
+
+section.in-view::before {
+    width: 100%;
+}
+
+/* =========================================
+   ICON COLORS FIX — use ink theme palette
+   ========================================= */
+/* Font Awesome icons — use accent colors or inherit */
+.fa-envelope  { color: var(--accent-red) !important; }
+.fa-phone     { color: var(--accent-gold) !important; }
+.fa-map-marker-alt, .fa-location-dot { color: var(--accent-red) !important; }
+.fa-circle-dot { color: var(--accent-red) !important; }
+.fa-moon, .fa-sun { color: var(--text-main) !important; }
+.fa-bars { color: var(--text-main) !important; }
+
+/* Devicon toolkit icons — keep their brand colors */
+.devicon-html5-plain    { color: #e44d26 !important; }
+.devicon-css3-plain     { color: #1572b6 !important; }
+.devicon-javascript-plain { color: #f7df1e !important; }
+.devicon-react-original { color: #61dafb !important; }
+.devicon-git-plain      { color: #f05032 !important; }
+.devicon-vscode-plain   { color: #007acc !important; }
+
+/* =========================================
+   NO-SCROLL BODY LOCK
+   ========================================= */
+body.no-scroll {
+    overflow: hidden !important;
+}

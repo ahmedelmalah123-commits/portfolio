@@ -287,22 +287,15 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Intro — only once per session
-    const hasSeenIntro = sessionStorage.getItem('intro-shown');
+    // ── GoTS Cinematic Intro (always on fresh session) ──
+    const hasSeenIntro = sessionStorage.getItem('gots-intro-seen');
     if (!hasSeenIntro) {
-        runIntroSequence();
-        sessionStorage.setItem('intro-shown', '1');
+        runGoTSIntro();
     } else {
-        // Skip intro instantly
         const introEl = document.getElementById('intro-sequence');
-        if (introEl) { introEl.style.display = 'none'; }
+        if (introEl) introEl.style.display = 'none';
         document.body.classList.remove('no-scroll');
-        initNavbar();
-        init3DCards();
-        initTouchFlip();
-        initChatbot();
-        initScrollReveal();
-        spawnParticles();
+        afterIntroInit();
     }
 
     // Contact form
@@ -311,10 +304,9 @@ document.addEventListener('DOMContentLoaded', () => {
         form.addEventListener('submit', (e) => {
             e.preventDefault();
             const btn = form.querySelector('.submit-btn');
-            btn.innerHTML = '<i class="fas fa-check"></i> Signal Sent';
-            btn.style.background = '#27C93F';
-            btn.style.color = '#fff';
-            btn.style.boxShadow = 'none';
+            btn.innerHTML = '<i class="fas fa-check"></i> Message Sent';
+            btn.style.borderLeftColor = '#2a7a2a';
+            btn.style.color = '#2a7a2a';
         });
     }
     initSoundSystem();
@@ -667,21 +659,41 @@ function initNavbar() {
 // SCROLL REVEAL
 // =============================================
 function initScrollReveal() {
-    const sections = document.querySelectorAll('.cinematic-section');
-    sections.forEach(sec => sec.classList.add('swing-in'));
+    // Reveal [data-reveal] elements on scroll
+    const reveals = document.querySelectorAll('[data-reveal]');
+    const sectionEls = document.querySelectorAll('section');
 
     const observer = new IntersectionObserver(entries => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
+                entry.target.classList.add('revealed');
                 entry.target.classList.add('is-revealed');
-                entry.target.querySelectorAll('[data-reveal]').forEach(child => child.classList.add('is-revealed'));
+                entry.target.classList.add('in-view');
                 observer.unobserve(entry.target);
             }
         });
-    }, { threshold: 0.08 });
+    }, { threshold: 0.08, rootMargin: '0px 0px -60px 0px' });
 
-    sections.forEach(el => observer.observe(el));
+    reveals.forEach(el => observer.observe(el));
+    sectionEls.forEach(el => observer.observe(el));
+
+    // Stagger toolkit items
+    const toolkitObserver = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const items = entry.target.querySelectorAll('.toolkit-item');
+                items.forEach((item, i) => {
+                    setTimeout(() => item.classList.add('visible'), i * 80);
+                });
+                toolkitObserver.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.1 });
+
+    const toolkit = document.getElementById('toolkit-container');
+    if (toolkit) toolkitObserver.observe(toolkit);
 }
+
 
 // =============================================
 // RENDER SKILLS
@@ -1041,23 +1053,24 @@ function exitIntro(intro) {
 
     if (intro._autoExit) clearTimeout(intro._autoExit);
 
-    // Play the slide-up exit animation
     intro.classList.add('exit');
 
-    // After animation completes, remove from DOM and unlock body
     setTimeout(() => {
         intro.style.display = 'none';
         unlockBody();
         sessionStorage.setItem('gots-intro-seen', '1');
-
-        // Initialize rest of site
-        initNavbar();
-        init3DCards();
-        initTouchFlip();
-        initChatbot();
-        initScrollReveal();
-        initSoundSystem();
+        afterIntroInit();
     }, 950);
+}
+
+// All site init that runs after intro ends
+function afterIntroInit() {
+    initNavbar();
+    init3DCards();
+    initTouchFlip();
+    initChatbot();
+    initScrollReveal();
+    initSoundSystem();
 }
 
 function skipIntro() {
@@ -1071,14 +1084,15 @@ function unlockBody() {
 
 // Boot the intro immediately on script load
 (function() {
+    // Clear old cyberpunk intro session key (migration)
+    sessionStorage.removeItem('intro-shown');
+
     const intro = document.getElementById('intro-sequence');
-    if (!intro) { unlockBody(); return; }
+    if (!intro) { return; }
 
     if (sessionStorage.getItem('gots-intro-seen')) {
         intro.style.display = 'none';
-        unlockBody();
-    } else {
-        runGoTSIntro();
     }
+    // runGoTSIntro() will be called from DOMContentLoaded
 })();
 
