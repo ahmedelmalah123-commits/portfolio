@@ -4,15 +4,39 @@
    CSS VARIABLES
    ========================================= */
 :root {
-    --bg-primary: #cfc3a3;          /* Slightly deeper parchment for contrast */
-    --text-main: #0f0c0b;           /* Darker wet ink for readability */
+    --bg-primary: #cfc3a3;
+    --text-main: #0f0c0b;
     --accent-red: #8a120b;
     --accent-gold: #b08d57;
+    --text-muted: rgba(15, 12, 11, 0.55);
 
     --font-heading: 'Yuji Boku', 'Noto Serif JP', serif;
     --font-subheading: 'Cinzel', serif;
     --font-body: 'Noto Serif JP', serif;
     --font-arabic: 'Amiri', serif;
+}
+
+/* Dark mode — deep ink-wash night */
+.light-mode {
+    --bg-primary: #1a1614;
+    --text-main: #cfc3a3;
+    --accent-red: #b5201b;
+    --accent-gold: #c9a96e;
+    --text-muted: rgba(207, 195, 163, 0.6);
+}
+
+.light-mode body {
+    background-color: #1a1614;
+    color: #cfc3a3;
+}
+
+.light-mode .navbar {
+    background: rgba(26, 22, 20, 0.9) !important;
+}
+
+.light-mode .skill-card-3d, .light-mode .project-card-3d, .light-mode .service-card {
+    background: rgba(207, 195, 163, 0.05) !important;
+    border-color: rgba(207, 195, 163, 0.15) !important;
 }
 
 /* =========================================
@@ -151,7 +175,7 @@ button, input, textarea, select {
 }
 
 /* =========================================
-   NAVBAR — transparent, cinematic
+   NAVBAR — frosted parchment, always readable
    ========================================= */
 .navbar {
     position: fixed;
@@ -162,9 +186,12 @@ button, input, textarea, select {
     justify-content: space-between;
     align-items: center;
     z-index: 1000;
-    background: transparent !important;
-    border: none !important;
+    background: rgba(207, 195, 163, 0.88) !important; /* Frosted parchment - always readable */
+    backdrop-filter: blur(12px) !important;
+    -webkit-backdrop-filter: blur(12px) !important;
+    border-bottom: 1px solid rgba(15, 12, 11, 0.08) !important;
     box-shadow: none !important;
+    transition: background 0.3s;
 }
 
 /* Vertical cinematic credit strip */
@@ -758,4 +785,186 @@ section {
     .hero-title { font-size: 2.8rem; }
     .portrait-container { max-width: 260px; }
     section, .cinematic-section { padding: 4rem 5%; }
+}
+
+/* =========================================
+   BUG FIXES — QA PASS
+   ========================================= */
+
+/* FIX 1: Bullet list alignment in About section */
+.about-content ul {
+    list-style-position: inside;
+    text-align: left;
+    padding: 0.5rem 0 0 0.5rem;
+    display: inline-block;
+}
+
+.about-content ul li {
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    opacity: 0.8;
+    padding: 0.25rem 0;
+    line-height: 1.6;
+}
+
+.about-content ul li::marker {
+    color: var(--accent-red);
+}
+
+/* FIX 2: Team/Leadership portrait — sepia ink-wash, constrained size */
+.team-portrait {
+    max-width: 260px !important;
+    width: 100% !important;
+    border-radius: 4px !important;
+    filter: grayscale(80%) sepia(45%) contrast(115%) brightness(78%) !important;
+    display: block;
+    margin: 0 auto 1.5rem;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+}
+
+.team-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 600px;
+    margin: 2rem auto 0;
+    gap: 1.5rem;
+}
+
+.team-card-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    text-align: center;
+}
+
+@media (min-width: 600px) {
+    .team-card-inner {
+        flex-direction: row;
+        text-align: left;
+        align-items: flex-start;
+    }
+}
+
+.team-name { color: var(--accent-red) !important; font-family: var(--font-subheading); }
+.team-role { font-family: var(--font-subheading); font-size: 0.85rem; letter-spacing: 2px; text-transform: uppercase; opacity: 0.65; margin-bottom: 0.8rem; }
+.team-desc { font-size: 0.95rem; line-height: 1.7; opacity: 0.8; }
+
+/* FIX 3: Contact form — neo-input floating label style */
+.input-group {
+    position: relative;
+    width: 100%;
+    padding-top: 1.4rem;
+}
+
+.neo-input {
+    width: 100% !important;
+    display: block !important;
+    padding: 10px 0 10px 0 !important;
+    font-family: var(--font-body) !important;
+    font-size: 1rem !important;
+    color: var(--text-main) !important;
+    background: transparent !important;
+    border: none !important;
+    border-bottom: 1px solid rgba(15, 12, 11, 0.25) !important;
+    box-shadow: none !important;
+    outline: none !important;
+    transition: border-color 0.3s;
+    resize: none;
+}
+
+textarea.neo-input {
+    min-height: 100px;
+}
+
+.neo-input:focus {
+    border-bottom-color: var(--accent-red) !important;
+}
+
+.input-group label {
+    position: absolute;
+    top: 1.6rem;
+    left: 0;
+    font-family: var(--font-subheading);
+    font-size: 0.78rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    opacity: 0.5;
+    transition: all 0.2s ease;
+    pointer-events: none;
+}
+
+.neo-input:focus ~ label,
+.neo-input:not(:placeholder-shown) ~ label,
+.neo-input:valid ~ label {
+    top: 0;
+    font-size: 0.68rem;
+    opacity: 0.35;
+    color: var(--accent-red);
+}
+
+/* Fix inputs with placeholder so label floats */
+.neo-input { color-scheme: light; }
+
+.contact-box {
+    max-width: 650px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+/* FIX 4: RTL Chatbot panel — prevent off-screen cut */
+[dir="rtl"] .chatbot-panel {
+    right: auto !important;
+    left: 0 !important;
+}
+
+[dir="rtl"] .ai-assistant {
+    right: auto;
+    left: 30px;
+}
+
+/* FIX 5: neon-red-text mapping to accent-red (no neon) */
+.neon-red-text {
+    color: var(--accent-red) !important;
+    text-shadow: none !important;
+}
+
+/* FIX 6: Zainstein section logo + title sizing */
+.zainstein-title-logo {
+    max-width: 180px !important;
+    width: auto !important;
+    height: auto !important;
+    opacity: 0.12 !important;
+    mix-blend-mode: multiply !important;
+    filter: brightness(0) !important;
+    display: block;
+    margin: 0 auto 1rem;
+}
+
+.zainstein-title {
+    font-family: var(--font-heading) !important;
+    font-size: clamp(2rem, 5vw, 3.5rem) !important;
+    color: var(--accent-red) !important;
+    text-align: center;
+    letter-spacing: 6px;
+    margin-bottom: 0.5rem;
+}
+
+.zainstein-tagline {
+    font-family: var(--font-subheading);
+    font-style: italic;
+    color: var(--accent-gold);
+    font-size: 1.1rem;
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.zainstein-bg-glow { display: none !important; }
+
+/* FIX 7: Utility classes */
+.align-center { text-align: center; }
+
+.text-muted, [style*="color:var(--text-muted)"] {
+    color: var(--text-muted) !important;
 }
