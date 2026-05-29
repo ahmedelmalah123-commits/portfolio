@@ -663,6 +663,23 @@ function initScrollReveal() {
     const reveals = document.querySelectorAll('[data-reveal]');
     const sectionEls = document.querySelectorAll('section');
 
+    // Instant reveal for elements already in viewport on load
+    reveals.forEach(el => {
+        const rect = el.getBoundingClientRect();
+        if (rect.top < window.innerHeight && rect.bottom > 0) {
+            el.classList.add('revealed');
+            el.classList.add('is-revealed');
+            el.classList.add('in-view');
+        }
+    });
+
+    sectionEls.forEach(el => {
+        const rect = el.getBoundingClientRect();
+        if (rect.top < window.innerHeight && rect.bottom > 0) {
+            el.classList.add('in-view');
+        }
+    });
+
     const observer = new IntersectionObserver(entries => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
@@ -672,7 +689,7 @@ function initScrollReveal() {
                 observer.unobserve(entry.target);
             }
         });
-    }, { threshold: 0.08, rootMargin: '0px 0px -60px 0px' });
+    }, { threshold: 0.05, rootMargin: '0px 0px -30px 0px' });
 
     reveals.forEach(el => observer.observe(el));
     sectionEls.forEach(el => observer.observe(el));
@@ -688,7 +705,7 @@ function initScrollReveal() {
                 toolkitObserver.unobserve(entry.target);
             }
         });
-    }, { threshold: 0.1 });
+    }, { threshold: 0.05 });
 
     const toolkit = document.getElementById('toolkit-container');
     if (toolkit) toolkitObserver.observe(toolkit);
@@ -751,7 +768,7 @@ function renderToolkit() {
     container.innerHTML = '';
     toolkitData.forEach((item, i) => {
         const chip = document.createElement('div');
-        chip.className = 'toolkit-chip';
+        chip.className = 'toolkit-item';
         chip.setAttribute('data-reveal', 'fade-up');
         if (parentRevealed) chip.classList.add('is-revealed');
         chip.style.transitionDelay = `${i * 0.08}s`;
@@ -802,7 +819,7 @@ function renderStats() {
     container.innerHTML = '';
     zainsteinStats.forEach(stat => {
         const div = document.createElement('div');
-        div.className = 'stat-box';
+        div.className = 'stat-item';
         div.innerHTML = `
             <div class="stat-number glow-red-text" data-target="${stat.count}">0</div>
             <div class="stat-suffix glow-red-text" style="font-size:1.5rem;font-weight:bold;line-height:0;margin-bottom:1rem;">${stat.suffix}</div>
