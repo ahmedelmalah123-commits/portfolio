@@ -1104,6 +1104,47 @@ function afterIntroInit() {
     initChatbot();
     initScrollReveal();
     initSoundSystem();
+    initAvatarToggle();
+}
+
+function initAvatarToggle() {
+    const container = document.getElementById('hero-portrait-container');
+    const toggleBtn = document.getElementById('avatar-toggle-btn');
+    const humanImg = document.querySelector('.portrait-human');
+    const samuraiImg = document.querySelector('.portrait-samurai');
+    const overlay = document.getElementById('portrait-slash-overlay');
+    const sfxKatana = document.getElementById('sfx-katana-swoosh');
+
+    if (!container || !toggleBtn || !humanImg || !samuraiImg || !overlay) return;
+
+    toggleBtn.addEventListener('click', (e) => {
+        e.stopPropagation(); // prevent card/container mousemove issues
+
+        // Play swoosh sound
+        if (sfxKatana) {
+            sfxKatana.currentTime = 0;
+            sfxKatana.play().catch(() => {});
+        }
+
+        // Trigger red slash-flash overlay animation
+        overlay.classList.remove('active');
+        void overlay.offsetWidth; // trigger reflow
+        overlay.classList.add('active');
+
+        // Swap the avatars after a tiny delay (during the peak of the flash)
+        setTimeout(() => {
+            const isSamurai = humanImg.classList.contains('hidden-avatar');
+            if (isSamurai) {
+                humanImg.classList.remove('hidden-avatar');
+                samuraiImg.classList.add('hidden-avatar');
+                toggleBtn.querySelector('.toggle-icon').innerText = '誉';
+            } else {
+                humanImg.classList.add('hidden-avatar');
+                samuraiImg.classList.remove('hidden-avatar');
+                toggleBtn.querySelector('.toggle-icon').innerText = '侍';
+            }
+        }, 120);
+    });
 }
 
 function skipIntro() {

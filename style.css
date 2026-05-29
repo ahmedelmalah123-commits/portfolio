@@ -53,6 +53,38 @@
     border-color: rgba(207, 195, 163, 0.3) !important;
 }
 
+/* Dark Mode overrides for Contact form visibility & text readability */
+.light-mode .neo-input,
+.light-mode .form-group input,
+.light-mode .form-group textarea {
+    border-bottom: 1px solid rgba(207, 195, 163, 0.3) !important;
+    color: var(--text-main) !important;
+}
+
+.light-mode .input-group label,
+.light-mode .form-group label {
+    color: var(--text-main) !important;
+    opacity: 0.85 !important;
+}
+
+.light-mode .neo-input:focus ~ label,
+.light-mode .neo-input:not(:placeholder-shown) ~ label,
+.light-mode .neo-input:valid ~ label {
+    color: var(--accent-gold) !important;
+    opacity: 1 !important;
+}
+
+/* Dark Mode overrides for faded background watermark decorative logos */
+.light-mode .section-logo img,
+.light-mode .abstract-symbol img,
+.light-mode .symbol-img,
+.light-mode img[alt*="Background Logo"],
+.light-mode img[alt*="symbol"] {
+    mix-blend-mode: screen !important;
+    filter: brightness(0) invert(0.92) !important;
+    opacity: 0.05 !important; /* Beautiful elegant silver-white watermark */
+}
+
 /* =========================================
    GLOBAL RESET
    ========================================= */
@@ -1035,93 +1067,86 @@ textarea.neo-input {
     to { opacity: 0; pointer-events: none; }
 }
 
-/* NEW: Samurai Silhouette Strike styles */
-.gots-samurai-strike {
+/* Unified Cinematic Side-by-Side Layout for Intro */
+.gots-intro-content {
     position: absolute;
     inset: 0;
-    z-index: 2;
+    z-index: 5;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 6%;
+    max-width: 1400px;
+    margin: 0 auto;
+    width: 100%;
+    height: 100%;
+}
+
+.gots-intro-left {
+    flex: 1.2;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+    justify-content: center;
+    z-index: 3;
+    opacity: 0;
+    animation: gotsKanjiAppear 0.5s ease 1.6s forwards;
+}
+
+.gots-intro-right {
+    flex: 1.2;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    text-align: right;
+    justify-content: center;
+    z-index: 3;
+    opacity: 0;
+    animation: gotsFadeUpRight 0.7s ease 2.5s forwards;
+}
+
+/* Redefined Samurai Strike element for the flex layout */
+.gots-samurai-strike {
+    flex: 1.5;
+    position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
     pointer-events: none;
+    z-index: 2;
     opacity: 0;
     animation: gotsSamuraiFadeIn 1.5s cubic-bezier(0.2, 0.8, 0.2, 1) 0.6s forwards;
 }
 
 @keyframes gotsSamuraiFadeIn {
-    0% { opacity: 0; transform: scale(0.95); }
-    100% { opacity: 0.18; transform: scale(1); }
+    0% { opacity: 0; transform: scale(0.92); }
+    100% { opacity: 1; transform: scale(1); }
 }
 
-.samurai-strike-svg {
-    width: 90vw;
-    height: 75vh;
-    max-width: 850px;
-    max-height: 600px;
+@keyframes gotsFadeUpRight {
+    from { opacity: 0; transform: translateY(30px); }
+    to   { opacity: 1; transform: translateY(0); }
 }
 
 .strike-flash {
     position: absolute;
-    inset: 0;
-    background: rgba(255, 255, 255, 0.95);
+    inset: -1000px;
+    background: rgba(255, 255, 255, 0.98);
     opacity: 0;
-    z-index: 10;
+    z-index: 100;
     pointer-events: none;
 }
 
-.samurai-warrior {
-    transform-origin: 400px 380px;
-    transition: transform 0.4s cubic-bezier(0.15, 0.85, 0.35, 1);
-}
-
-#sword-blade, #sword-slash-arc {
-    opacity: 0;
-    stroke-dasharray: 1000;
-    stroke-dashoffset: 1000;
-    transition: opacity 0.3s ease;
-}
-
-/* Active Katana Strike trigger state */
 .strike-active .strike-flash {
     animation: strikeFlashAnim 0.38s cubic-bezier(0.1, 0.8, 0.3, 1) forwards;
 }
 
-.strike-active .samurai-warrior {
-    animation: samuraiLunge 0.4s cubic-bezier(0.15, 0.85, 0.35, 1) forwards;
-    fill: #150505 !important;
-}
-
-.strike-active #sword-blade {
-    animation: swordGlowAnim 0.6s cubic-bezier(0.15, 0.85, 0.35, 1) forwards;
-}
-
-.strike-active #sword-slash-arc {
-    animation: slashArcAnim 0.48s cubic-bezier(0.1, 0.9, 0.3, 1) forwards;
-}
-
 @keyframes strikeFlashAnim {
     0% { opacity: 0; }
-    12% { opacity: 0.95; }
+    12% { opacity: 0.98; }
     30% { opacity: 0.8; }
     100% { opacity: 0; }
-}
-
-@keyframes samuraiLunge {
-    0% { transform: scale(1) translate(0, 0); }
-    15% { transform: scale(1.08) translate(-25px, 15px); }
-    100% { transform: scale(1.02) translate(-8px, 4px); }
-}
-
-@keyframes swordGlowAnim {
-    0% { opacity: 0; }
-    15% { opacity: 1; }
-    100% { opacity: 0.3; }
-}
-
-@keyframes slashArcAnim {
-    0% { opacity: 0; stroke-dashoffset: 1000; }
-    15% { opacity: 1; stroke-dashoffset: 800; }
-    100% { opacity: 1; stroke-dashoffset: 0; }
 }
 
 /* Layer 2 — Red ink brushstroke SVG sweep */
@@ -1132,12 +1157,12 @@ textarea.neo-input {
     width: 100%;
     height: 200px;
     transform: translateY(-50%);
-    z-index: 2;
+    z-index: 1;
     opacity: 0;
     animation: gotsBrushAppear 0.3s ease 0.4s forwards;
 }
 
-@keyframes gotsBrushAppear { to { opacity: 1; } }
+@keyframes gotsBrushAppear { to { opacity: 0.45; } }
 
 /* SVG path draw animation */
 #brush-path {
@@ -1149,28 +1174,23 @@ textarea.neo-input {
     to { stroke-dashoffset: 0; }
 }
 
-/* Layer 3 — Kanji stamp block */
+/* Left Wing: Bushido Kanji Stamp Block */
 .gots-kanji-stamp {
-    position: absolute;
-    z-index: 3;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    gap: 1.5rem;
-    opacity: 0;
-    animation: gotsKanjiAppear 0.4s ease 1.6s forwards;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
 }
-
-@keyframes gotsKanjiAppear { to { opacity: 1; } }
 
 .gots-kanji-row {
     display: flex;
-    gap: 1.5rem;
+    gap: 1rem;
 }
 
 .gots-kanji-char {
     font-family: 'Yuji Boku', serif;
-    font-size: clamp(3.8rem, 10vw, 7.5rem);
+    font-size: clamp(3.2rem, 8vw, 6.5rem);
     color: #8a120b;
     line-height: 1;
     display: block;
@@ -1179,38 +1199,6 @@ textarea.neo-input {
     filter: blur(4px);
 }
 
-/* Translations beneath the stamped Kanji */
-.gots-kanji-translation {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    gap: 0.3rem;
-    font-family: 'Cinzel', serif;
-    letter-spacing: 3px;
-    font-weight: 700;
-    opacity: 0;
-    transform: translateY(12px);
-    animation: gotsTranslationFade 0.6s ease 2.6s forwards;
-    text-shadow: 0 2px 10px rgba(0,0,0,0.7);
-}
-
-.gots-kanji-translation .en-translation {
-    font-size: clamp(0.68rem, 1.6vw, 0.85rem);
-    color: #cfc3a3;
-}
-
-.gots-kanji-translation .ar-translation {
-    font-family: 'Amiri', serif;
-    font-size: clamp(0.85rem, 2vw, 1.05rem);
-    color: var(--accent-red);
-}
-
-@keyframes gotsTranslationFade {
-    to { opacity: 1; transform: translateY(0); }
-}
-
-/* Each char stamps in with delay via JS-driven class */
 .gots-kanji-char.stamp {
     animation: gotsStamp 0.5s cubic-bezier(0.2, 0.9, 0.3, 1) forwards;
 }
@@ -1222,56 +1210,132 @@ textarea.neo-input {
     100% { opacity: 1; transform: scale(1); filter: blur(0); }
 }
 
-/* Layer 4 — Title block */
-.gots-title-block {
-    position: absolute;
-    bottom: 18%;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 4;
-    text-align: center;
+/* Translations beneath the stamped Kanji */
+.gots-kanji-translation {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+    gap: 0.4rem;
+    font-family: 'Cinzel', serif;
+    letter-spacing: 2px;
+    font-weight: 700;
     opacity: 0;
-    animation: gotsFadeUp 0.7s ease 2.5s forwards;
+    transform: translateY(12px);
+    animation: gotsTranslationFade 0.6s ease 2.6s forwards;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.7);
 }
 
-@keyframes gotsFadeUp {
-    from { opacity: 0; transform: translateX(-50%) translateY(24px); }
-    to   { opacity: 1; transform: translateX(-50%) translateY(0); }
+.gots-kanji-translation .en-translation {
+    font-size: clamp(0.65rem, 1.4vw, 0.8rem);
+    color: #cfc3a3;
+}
+
+.gots-kanji-translation .ar-translation {
+    font-family: 'Amiri', serif;
+    font-size: clamp(0.8rem, 1.8vw, 0.95rem);
+    color: var(--accent-red);
+}
+
+@keyframes gotsTranslationFade {
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Right Wing: Personal Brand Stamp */
+.gots-title-block {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    text-align: right;
+    gap: 0.6rem;
 }
 
 .gots-pre-label {
     font-family: 'Yuji Boku', serif;
-    font-size: clamp(1.8rem, 5vw, 3.5rem);
+    font-size: clamp(1.8rem, 4.5vw, 3.2rem);
     color: #cfc3a3;
-    letter-spacing: 8px;
+    letter-spacing: 6px;
     text-transform: uppercase;
-    margin-bottom: 0.4rem;
+    margin-bottom: 0.2rem;
     text-shadow: 0 2px 12px rgba(0,0,0,0.8);
 }
 
 .gots-role-label {
     font-family: 'Cinzel', serif;
-    font-size: clamp(0.7rem, 1.5vw, 1rem);
+    font-size: clamp(0.65rem, 1.3vw, 0.85rem);
     color: rgba(207, 195, 163, 0.6);
-    letter-spacing: 4px;
+    letter-spacing: 3px;
     text-transform: uppercase;
     margin-bottom: 1.5rem;
 }
 
 /* Hanko seal — round red stamp */
 .gots-seal {
-    width: 64px;
-    height: 64px;
+    width: 58px;
+    height: 58px;
     border: 3px solid #8a120b;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 0 auto;
+    margin: 0 0 0 auto;
     opacity: 0;
     transform: scale(0) rotate(-30deg);
     animation: gotsSeal 0.6s cubic-bezier(0.2, 0.9, 0.3, 1.2) 3.2s forwards;
     box-shadow: 0 0 0 1px rgba(138,18,11,0.3), inset 0 0 0 2px rgba(138,18,11,0.15);
+}
+
+.gots-seal span {
+    font-family: 'Yuji Boku', serif;
+    font-size: 1.6rem;
+    color: #8a120b;
+    line-height: 1;
+}
+
+@keyframes gotsSeal {
+    0%   { opacity: 0; transform: scale(0) rotate(-30deg); }
+    70%  { opacity: 1; transform: scale(1.15) rotate(5deg); }
+    100% { opacity: 1; transform: scale(1) rotate(0deg); }
+}
+
+/* Responsive adjustments for intro layout */
+@media (max-width: 992px) {
+    .gots-intro-content {
+        flex-direction: column;
+        justify-content: center;
+        gap: 2rem;
+        padding: 3rem 5%;
+    }
+    .gots-intro-left {
+        align-items: center;
+        text-align: center;
+        flex: none;
+    }
+    .gots-intro-left .gots-kanji-stamp {
+        align-items: center;
+    }
+    .gots-kanji-translation {
+        align-items: center;
+        text-align: center;
+    }
+    .gots-intro-right {
+        align-items: center;
+        text-align: center;
+        flex: none;
+    }
+    .gots-title-block {
+        align-items: center;
+        text-align: center;
+    }
+    .gots-seal {
+        margin: 0 auto;
+    }
+    .gots-samurai-strike {
+        flex: none;
+        width: 250px;
+        height: 250px;
+        margin: 1rem 0;
+    }
 }
 
 .gots-seal span {
@@ -1577,4 +1641,264 @@ section.in-view::before {
    ========================================= */
 body.no-scroll {
     overflow: hidden !important;
+}
+
+/* =========================================
+   CARTOON SAMURAI INTRO REDESIGN
+   ========================================= */
+.samurai-intro-wrapper {
+    position: relative;
+    width: 320px;
+    height: 320px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform-origin: center center;
+    transition: transform 0.4s cubic-bezier(0.15, 0.85, 0.35, 1);
+}
+
+.samurai-intro-img {
+    width: 280px;
+    height: 280px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 4px solid var(--accent-red);
+    box-shadow: 0 0 35px rgba(138, 18, 11, 0.7);
+    z-index: 2;
+    transition: transform 0.3s ease;
+    /* Perfectly looping continuous fluid float & bouncy twirl animation */
+    animation: continuousFloatAndTwirl 6s ease-in-out infinite;
+}
+
+@keyframes continuousFloatAndTwirl {
+    0%, 100% {
+        transform: translateY(0) rotate(0deg) scale(1);
+    }
+    30% {
+        transform: translateY(-12px) rotate(4deg) scale(1.02);
+    }
+    70% {
+        transform: translateY(6px) rotate(-3deg) scale(0.98);
+    }
+}
+
+.samurai-blade-spin {
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    border: 2.5px dashed rgba(212, 175, 55, 0.38); /* Gold accent */
+    border-top-color: var(--accent-red);
+    border-bottom-color: var(--accent-red);
+    z-index: 1;
+    animation: katanaTwirlBorder 4s linear infinite;
+    pointer-events: none;
+    box-shadow: 0 0 25px rgba(138, 18, 11, 0.2);
+}
+
+@keyframes katanaTwirlBorder {
+    0% { transform: rotate(0deg) scale(1); }
+    50% { transform: rotate(180deg) scale(1.03); }
+    100% { transform: rotate(360deg) scale(1); }
+}
+
+.samurai-glowing-sun {
+    position: absolute;
+    width: 290px;
+    height: 290px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(138, 18, 11, 0.85) 0%, transparent 70%);
+    z-index: 1;
+    opacity: 0.5;
+    animation: sunPulse 2s ease-in-out infinite;
+}
+
+@keyframes sunPulse {
+    0%, 100% { transform: scale(1); opacity: 0.4; }
+    50% { transform: scale(1.08); opacity: 0.75; }
+}
+
+/* Looping Red Ink Particles */
+.samurai-ink-particles {
+    position: absolute;
+    inset: -30px;
+    pointer-events: none;
+    z-index: 4;
+    overflow: hidden;
+    border-radius: 50%;
+}
+
+.ink-particle {
+    position: absolute;
+    background: #8a120b;
+    border-radius: 50%;
+    filter: blur(1.5px);
+    opacity: 0;
+}
+
+.ink-particle.p1 { width: 6px; height: 6px; left: 20%; bottom: 10%; animation: floatParticle 3.5s infinite 0.2s; }
+.ink-particle.p2 { width: 10px; height: 10px; left: 45%; bottom: 5%; animation: floatParticle 4.2s infinite 1.1s; }
+.ink-particle.p3 { width: 8px; height: 8px; left: 75%; bottom: 15%; animation: floatParticle 3.8s infinite 0.6s; }
+.ink-particle.p4 { width: 5px; height: 5px; left: 30%; bottom: 20%; animation: floatParticle 4.5s infinite 2s; }
+.ink-particle.p5 { width: 12px; height: 12px; left: 60%; bottom: 8%; animation: floatParticle 5s infinite 1.5s; }
+
+@keyframes floatParticle {
+    0% {
+        transform: translateY(0) scale(0.6) rotate(0deg);
+        opacity: 0;
+    }
+    20% {
+        opacity: 0.85;
+    }
+    80% {
+        opacity: 0.6;
+    }
+    100% {
+        transform: translateY(-200px) scale(1.3) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+.samurai-slash-svg {
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    max-width: 900px;
+    max-height: 650px;
+    pointer-events: none;
+    z-index: 5;
+}
+
+.strike-active .samurai-intro-wrapper {
+    animation: samuraiLunge 0.55s cubic-bezier(0.15, 0.85, 0.35, 1) forwards;
+}
+
+.strike-active .samurai-intro-img {
+    animation: samuraiSlashShake 0.55s cubic-bezier(0.15, 0.85, 0.35, 1) forwards;
+}
+
+.strike-active #sword-slash-arc {
+    animation: slashArcAnim 0.58s cubic-bezier(0.1, 0.9, 0.3, 1) forwards;
+}
+
+@keyframes samuraiLunge {
+    0% { transform: scale(1) translate(0, 0); }
+    12% { transform: scale(1.22) translate(-35px, -15px) rotate(-8deg); }
+    30% { transform: scale(1.12) translate(25px, 10px) rotate(4deg); }
+    100% { transform: scale(1.05) translate(0, 0) rotate(0deg); }
+}
+
+@keyframes samuraiSlashShake {
+    0% { transform: scale(1); filter: brightness(1); }
+    12% { transform: scale(1.08) rotate(-4deg); filter: brightness(1.6) drop-shadow(0 0 20px var(--accent-red)); }
+    100% { transform: scale(1); filter: brightness(1); }
+}
+
+@keyframes slashArcAnim {
+    0% { opacity: 0; stroke-dashoffset: 1000; }
+    15% { opacity: 1; stroke-dashoffset: 1000; }
+    45% { opacity: 1; stroke-dashoffset: 0; }
+    100% { opacity: 0; stroke-dashoffset: -1000; }
+}
+
+/* =========================================
+   SAMURAI PORTRAIT MODE IN SITE
+   ========================================= */
+.portrait-container {
+    position: relative;
+    width: 100%;
+    max-width: 320px;
+    aspect-ratio: 4/5;
+    mix-blend-mode: multiply;
+    overflow: hidden;
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+.portrait-img {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: opacity 0.5s cubic-bezier(0.25, 1, 0.5, 1), transform 0.5s cubic-bezier(0.25, 1, 0.5, 1) !important;
+}
+
+.portrait-samurai {
+    filter: grayscale(0%) contrast(110%) brightness(95%) !important; /* Retain glorious dynamic colors */
+    mix-blend-mode: normal !important;
+    border-radius: 50% !important;
+    clip-path: circle(48% at 50% 50%) !important; /* Perfect circular crop */
+    box-shadow: 0 0 35px rgba(138, 18, 11, 0.6) !important;
+    border: 4px solid var(--accent-red) !important;
+}
+
+.hidden-avatar {
+    opacity: 0 !important;
+    pointer-events: none;
+    transform: scale(0.92) rotate(-8deg);
+}
+
+.portrait-container .portrait-img:not(.hidden-avatar) {
+    opacity: 1 !important;
+    pointer-events: auto;
+    transform: scale(1) rotate(0deg);
+}
+
+/* Red slash/flash over the portrait during swap */
+.portrait-slash-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(138, 18, 11, 0.8);
+    opacity: 0;
+    z-index: 5;
+    pointer-events: none;
+    mix-blend-mode: color-dodge;
+}
+
+.portrait-slash-overlay.active {
+    animation: portraitFlash 0.4s cubic-bezier(0.15, 0.85, 0.35, 1) forwards;
+}
+
+@keyframes portraitFlash {
+    0% { opacity: 0; }
+    30% { opacity: 0.95; }
+    100% { opacity: 0; }
+}
+
+/* Avatar Toggle Button (Hanko Seal style) */
+.avatar-toggle-btn {
+    position: absolute;
+    bottom: 15px;
+    right: 15px;
+    width: 44px;
+    height: 44px;
+    background: var(--accent-red) !important;
+    border: 2px solid var(--accent-gold) !important;
+    border-radius: 50% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    cursor: pointer !important;
+    z-index: 10 !important;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3) !important;
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), background 0.3s;
+}
+
+.avatar-toggle-btn:hover {
+    transform: scale(1.15) rotate(15deg);
+    background: #a11812 !important;
+}
+
+.avatar-toggle-btn .toggle-icon {
+    font-family: 'Yuji Boku', serif;
+    font-size: 1.25rem;
+    color: var(--accent-gold);
+    line-height: 1;
+    font-weight: 700;
+}
+
+.light-mode .portrait-container {
+    mix-blend-mode: normal !important;
 }

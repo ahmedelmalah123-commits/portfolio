@@ -102,82 +102,70 @@
             </svg>
         </div>
 
-        <!-- NEW Layer: Samurai Silhouette Katana Strike -->
-        <div class="gots-samurai-strike" id="gots-samurai-strike">
-            <!-- Screen flash on sword strike -->
-            <div class="strike-flash"></div>
-            
-            <svg viewBox="0 0 800 600" preserveAspectRatio="xMidYMid meet" class="samurai-strike-svg">
-                <defs>
-                    <!-- Glowing trail effect -->
-                    <filter id="red-glow" x="-20%" y="-20%" width="140%" height="140%">
-                        <feGaussianBlur stdDeviation="8" result="blur" />
-                        <feMerge>
-                            <feMergeNode in="blur" />
-                            <feMergeNode in="SourceGraphic" />
-                        </feMerge>
-                    </filter>
-                </defs>
+        <!-- Unified Cinematic Side-by-Side Layout -->
+        <div class="gots-intro-content">
+            <!-- Left Wing: Bushido Kanji & Meaning -->
+            <div class="gots-intro-left" id="gots-kanji">
+                <div class="gots-kanji-stamp">
+                    <div class="gots-kanji-row">
+                        <span class="gots-kanji-char" data-delay="0">武</span>
+                        <span class="gots-kanji-char" data-delay="1">士</span>
+                        <span class="gots-kanji-char" data-delay="2">道</span>
+                    </div>
+                </div>
+                <div class="gots-kanji-translation" id="gots-translation">
+                    <span class="en-translation">BUSHIDO • THE WAY OF THE WARRIOR</span>
+                    <span class="ar-translation">بوشيدو • طريق المحارب</span>
+                </div>
+            </div>
+
+            <!-- Center Column: Cartoon Samurai Katana Strike & Loop -->
+            <div class="gots-samurai-strike" id="gots-samurai-strike">
+                <!-- Screen flash on sword strike -->
+                <div class="strike-flash"></div>
                 
-                <!-- Samurai warrior silhouette standing in striking pose -->
-                <g class="samurai-warrior" fill="#0f0c0b">
-                    <!-- Base shadow & legs in wide warrior stance -->
-                    <path d="M 330 520 L 300 580 L 320 580 L 350 530 L 450 530 L 480 580 L 500 580 L 470 520 Z" />
-                    <!-- Hakama (traditional pleated trousers) -->
-                    <path d="M 320 380 L 330 520 L 470 520 L 480 380 Q 400 400 320 380 Z" />
-                    <!-- Torso armor (Do) & shoulder guards (Sode) -->
-                    <path d="M 340 280 L 460 280 L 475 380 L 325 380 Z" />
-                    <!-- Left arm lunging forward in dynamic slash motion -->
-                    <path d="M 340 280 Q 280 260 220 280 L 210 300 L 260 330 Q 320 310 340 280 Z" />
-                    <!-- Right arm pulling back to support high-velocity sword swing -->
-                    <path d="M 460 280 Q 510 240 540 210 L 555 225 L 485 320 Z" fill="#0c0908" />
-                    <!-- Kabuto Helmet with majestic crescent horns (Kuwagata) -->
-                    <path d="M 380 200 C 380 185 420 185 420 200 L 430 220 L 370 220 Z" />
-                    <!-- Majestic crescent crest -->
-                    <path d="M 360 170 Q 400 195 440 170 Q 400 180 360 170 Z" fill="#b08d57" />
-                    <!-- Traditional Menpo Samurai Mask -->
-                    <path d="M 385 220 C 385 235 415 235 415 220 L 410 245 C 400 252 400 252 390 245 Z" fill="#080706" />
-                </g>
-
-                <!-- Glowing Crimson Katana Sword Blade -->
-                <g class="katana-sword">
-                    <!-- Hilt (Tsuka) -->
-                    <path d="M 220 280 L 190 295 L 180 285 L 210 270 Z" fill="#b08d57" />
-                    <!-- Sword guard (Tsuba) -->
-                    <ellipse cx="210" cy="275" rx="8" ry="12" fill="#b08d57" transform="rotate(-25 210 275)" />
-                    <!-- The razor-sharp blade in motion, glowing intensely red -->
-                    <path id="sword-blade" d="M 210 275 L 50 140 C 40 130 55 110 70 120 L 225 270 Z" 
-                          fill="#8a120b" filter="url(#red-glow)" />
-                </g>
-
-                <!-- Dynamic circular ink-splash sword arc representing the katana strike -->
-                <path id="sword-slash-arc" d="M 80 130 Q 300 350 720 180" 
-                      stroke="#8a120b" stroke-width="12" fill="none" stroke-linecap="round"
-                      filter="url(#red-glow)" />
-            </svg>
-        </div>
-
-        <!-- Layer 3: Central Kanji stamp (BUSHIDO - Meaningful Samurai code) -->
-        <div class="gots-kanji-stamp" id="gots-kanji">
-            <div class="gots-kanji-row">
-                <span class="gots-kanji-char" data-delay="0">武</span>
-                <span class="gots-kanji-char" data-delay="1">士</span>
-                <span class="gots-kanji-char" data-delay="2">道</span>
+                <div class="samurai-intro-wrapper">
+                    <img src="./assets/samurai.jpg" alt="Samurai Warrior" class="samurai-intro-img">
+                    <div class="samurai-glowing-sun"></div>
+                    <div class="samurai-blade-spin"></div>
+                    
+                    <!-- Looping Red Ink Particles -->
+                    <div class="samurai-ink-particles">
+                        <div class="ink-particle p1"></div>
+                        <div class="ink-particle p2"></div>
+                        <div class="ink-particle p3"></div>
+                        <div class="ink-particle p4"></div>
+                        <div class="ink-particle p5"></div>
+                    </div>
+                    
+                    <!-- Glowing sword slash arc -->
+                    <svg viewBox="0 0 800 600" class="samurai-slash-svg" preserveAspectRatio="xMidYMid meet">
+                        <defs>
+                            <filter id="red-glow" x="-20%" y="-20%" width="140%" height="140%">
+                                <feGaussianBlur stdDeviation="8" result="blur" />
+                                <feMerge>
+                                    <feMergeNode in="blur" />
+                                    <feMergeNode in="SourceGraphic" />
+                                </feMerge>
+                            </filter>
+                        </defs>
+                        <path id="sword-slash-arc" d="M 120 150 Q 300 400 700 180" 
+                              stroke="#8a120b" stroke-width="15" fill="none" stroke-linecap="round"
+                              filter="url(#red-glow)" />
+                    </svg>
+                </div>
             </div>
-            <!-- Arabic & English Translations to make it deeply meaningful -->
-            <div class="gots-kanji-translation" id="gots-translation">
-                <span class="en-translation">BUSHIDO • THE WAY OF THE WARRIOR</span>
-                <span class="ar-translation">بوشيدو • طريق المحارب الساموراي</span>
-            </div>
-        </div>
 
-        <!-- Layer 4: Name title — Samurai stamp style -->
-        <div class="gots-title-block" id="gots-title">
-            <div class="gots-pre-label">AHMED AL-MALAH</div>
-            <div class="gots-role-label">Senior Designer &amp; Software Engineer</div>
-            <!-- Red Hanko seal stamp representing "Honor" (誉) -->
-            <div class="gots-seal">
-                <span>誉</span>
+            <!-- Right Wing: Personal Brand Stamp -->
+            <div class="gots-intro-right" id="gots-title">
+                <div class="gots-title-block">
+                    <div class="gots-pre-label">AHMED AL-MALAH</div>
+                    <div class="gots-role-label">Senior Designer &amp; Software Engineer</div>
+                    <!-- Red Hanko seal stamp representing "Honor" (誉) -->
+                    <div class="gots-seal">
+                        <span>誉</span>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -275,9 +263,16 @@
                     </div>
                 </div>
                 <div class="hero-right" data-reveal="scale-in">
-                    <div class="portrait-container">
+                    <div class="portrait-container" id="hero-portrait-container">
                         <div class="neon-outline"></div>
-                        <img src="./assets/portrait.jpg" alt="Ahmed Al-Malah" class="portrait-img float-anim" onerror="this.src='https://via.placeholder.com/450x550/111/FF1A1A?text=Portrait'">
+                        <div class="portrait-slash-overlay" id="portrait-slash-overlay"></div>
+                        <img src="./assets/portrait.jpg" alt="Ahmed Al-Malah" class="portrait-img portrait-human float-anim" onerror="this.src='https://via.placeholder.com/450x550/111/FF1A1A?text=Portrait'">
+                        <img src="./assets/samurai.jpg" alt="Ahmed Al-Malah Samurai" class="portrait-img portrait-samurai float-anim hidden-avatar" onerror="this.src='https://via.placeholder.com/450x550/111/FF1A1A?text=Samurai'">
+                        
+                        <!-- Toggle Button (Hanko Seal style) -->
+                        <button class="avatar-toggle-btn" id="avatar-toggle-btn" title="Toggle Samurai Mode">
+                            <span class="toggle-icon">誉</span>
+                        </button>
                     </div>
                     <div class="abstract-symbol">
                         <img src="./assets/logo.png?v=4" alt="Zainstein Background Logo" class="symbol-img" onerror="this.src='https://via.placeholder.com/500/111/FF1A1A?text=Z'">
