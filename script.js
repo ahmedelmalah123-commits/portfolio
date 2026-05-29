@@ -1048,14 +1048,30 @@ function runGoTSIntro() {
     // Lock scrolling while intro plays
     document.body.classList.add('no-scroll');
 
-    // Stamp each Kanji character in sequence
-    // First char at 1.7s, second at 2.1s
-    const stampDelays = [1700, 2100];
+    // Stamp each of the three Kanji characters (武, 士, 道) sequentially
+    // 武 at 1.7s, 士 at 2.0s, 道 at 2.3s
+    const stampDelays = [1700, 2000, 2300];
     chars.forEach((char, i) => {
-        setTimeout(() => {
-            char.classList.add('stamp');
-        }, stampDelays[i]);
+        if (stampDelays[i] !== undefined) {
+            setTimeout(() => {
+                char.classList.add('stamp');
+            }, stampDelays[i]);
+        }
     });
+
+    // Trigger Samurai Silhouette Katana Strike & swoosh SFX at exactly 3.8s
+    setTimeout(() => {
+        const samurai = document.getElementById('gots-samurai-strike');
+        if (samurai) {
+            samurai.classList.add('strike-active');
+        }
+        const katanaSwoosh = document.getElementById('sfx-katana-swoosh');
+        if (katanaSwoosh) {
+            katanaSwoosh.volume = 0.5;
+            katanaSwoosh.currentTime = 0;
+            katanaSwoosh.play().catch(() => {});
+        }
+    }, 3800);
 
     // Auto-exit after full sequence (6.5s total)
     const autoExit = setTimeout(() => exitIntro(intro), 6500);
