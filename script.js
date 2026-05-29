@@ -253,7 +253,7 @@ function detectDevice() {
 
 
 // =============================================
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
     // Custom cursor
     initCustomCursor();
 
@@ -263,6 +263,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Language
     setLanguage(currentLang);
+
+    // Dynamic data fetch from Sanity Studio Headless CMS
+    await fetchSanityData();
 
     const langToggleBtn = document.getElementById('lang-toggle');
     if (langToggleBtn) {
@@ -1169,4 +1172,159 @@ function unlockBody() {
     }
     // runGoTSIntro() will be called from DOMContentLoaded
 })();
+
+// =============================================
+// SANITY CMS DYNAMIC INTEGRATION
+// =============================================
+async function fetchSanityData() {
+    if (!window.sanityClient) {
+        console.warn("Sanity client not loaded yet. Using beautiful static fallback data.");
+        return;
+    }
+    
+    // Check if projectId is still the default placeholder
+    const config = window.sanityClient.config();
+    if (config.projectId === 'your_project_id') {
+        console.log("Sanity Project ID is set to placeholder. Using beautiful static fallback data.");
+        return;
+    }
+
+    try {
+        console.log("Fetching dynamic data from Sanity Headless CMS...");
+        
+        // Parallel fetching for high performance
+        const [heroData, aboutData, fetchedSkills, fetchedProjects, fetchedServices] = await Promise.all([
+            window.sanityClient.fetch('*[_type == "hero"][0]'),
+            window.sanityClient.fetch('*[_type == "about"][0]'),
+            window.sanityClient.fetch('*[_type == "skills"]'),
+            window.sanityClient.fetch('*[_type == "projects"]'),
+            window.sanityClient.fetch('*[_type == "services"]')
+        ]);
+
+        // 1. Map Hero Profile
+        if (heroData) {
+            if (heroData.name) {
+                // Keep the <br/> styling for cinematic font
+                translations['hero-name'] = {
+                    en: heroData.name.replace(' ', '<br/>'),
+                    ar: heroData.name.replace(' ', '<br/>')
+                };
+            }
+            if (heroData.primaryRole) {
+                translations['hero-role-1'] = { en: heroData.primaryRole, ar: heroData.primaryRole };
+            }
+            if (heroData.secondaryRole) {
+                translations['hero-role-2'] = { en: heroData.secondaryRole, ar: heroData.secondaryRole };
+            }
+            if (heroData.tagline) {
+                translations['hero-tagline'] = { en: `"${heroData.tagline}"`, ar: `"${heroData.tagline}"` };
+            }
+            // Update portrait images in DOM if present
+            if (heroData.portraitImage) {
+                const portraitHuman = document.querySelector('.portrait-human');
+                if (portraitHuman) portraitHuman.src = window.urlFor(heroData.portraitImage);
+            }
+            if (heroData.samuraiImage) {
+                const portraitSamurai = document.querySelector('.portrait-samurai');
+                const introSamurai = document.querySelector('.samurai-intro-img');
+                if (portraitSamurai) portraitSamurai.src = window.urlFor(heroData.samuraiImage);
+                if (introSamurai) introSamurai.src = window.urlFor(heroData.samuraiImage);
+            }
+        }
+
+        // 2. Map About Section
+        if (aboutData) {
+            if (aboutData.bio && aboutData.bio.length > 0) {
+                if (aboutData.bio[0]) translations['about-p1'] = { en: aboutData.bio[0], ar: aboutData.bio[0] };
+                if (aboutData.bio[1]) translations['about-p2'] = { en: aboutData.bio[1], ar: aboutData.bio[1] };
+            }
+            if (aboutData.certifications && aboutData.certifications.length > 0) {
+                // Dynamically update the about-cert list in DOM
+                const certList = document.querySelector('#about ul');
+                if (certList) {
+                    certList.innerHTML = aboutData.certifications.map((cert, index) => `
+                        <li data-i18n="about-cert-${index + 1}">${cert}</li>
+                    `).join('');
+                }
+            }
+        }
+
+        // 3. Map Skills & Toolkit
+        if (fetchedSkills && fetchedSkills.length > 0) {
+            // Re-populate skillsData and toolkitData
+            skillsData.length = 0; // Clear static array
+            toolkitData.length = 0; // Clear static array
+            
+            fetchedSkills.forEach(cat => {
+                if (cat.skillsList) {
+                    skillsData.push({
+                        category: { en: cat.categoryName, ar: cat.categoryName },
+                        icon: cat.iconClass || 'fa-code',
+                        items: cat.skillsList.map(item => ({
+                            en: item.name,
+                            ar: item.name,
+                            percent: item.percentage || 90,
+                            logos: item.iconClass ? [item.iconClass] : ['fas fa-check neon-red-text']
+                        }))
+                    });
+                }
+                if (cat.toolkit) {
+                    cat.toolkit.forEach(tool => {
+                        toolkitData.push({
+                            en: tool,
+                            ar: tool,
+                            logo: 'fas fa-screwdriver-wrench neon-red-text'
+                        });
+                    });
+                }
+            });
+        }
+
+        // 4. Map Projects/Work
+        if (fetchedProjects && fetchedProjects.length > 0) {
+            ahmedProjects.length = 0;
+            zainsteinProjects.length = 0;
+            
+            fetchedProjects.forEach(proj => {
+                const mappedProj = {
+                    title: { en: proj.title, ar: proj.title },
+                    role: { en: proj.role, ar: proj.role },
+                    desc: { en: proj.description, ar: proj.description },
+                    icon: proj.iconIdentifier || 'fa-laptop-code',
+                    tech: { en: (proj.tags || []).join(', '), ar: (proj.tags || []).join(', ') }
+                };
+                
+                // If it belongs to Zainstein or has Zainstein tag
+                if (proj.tags && proj.tags.some(t => t.toLowerCase() === 'zainstein')) {
+                    zainsteinProjects.push(mappedProj);
+                } else {
+                    ahmedProjects.push(mappedProj);
+                }
+            });
+        }
+
+        // 5. Map Zainstein Services
+        if (fetchedServices && fetchedServices.length > 0) {
+            zainsteinServices.length = 0;
+            fetchedServices.forEach(svc => {
+                zainsteinServices.push({
+                    title: { en: svc.serviceName, ar: svc.serviceName },
+                    role: { en: svc.serviceName, ar: svc.serviceName },
+                    desc: { en: svc.description, ar: svc.description },
+                    icon: svc.iconClass || 'fa-server',
+                    tags: { en: svc.tags || [], ar: svc.tags || [] }
+                });
+            });
+        }
+
+        console.log("Sanity dynamic integration completed successfully! Updating layout...");
+        
+        // Re-apply language and re-render sections with the fresh data
+        setLanguage(currentLang);
+
+    } catch (error) {
+        console.error("Error fetching data from Sanity Studio, falling back to beautiful static data:", error);
+    }
+}
+
 
